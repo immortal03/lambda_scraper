@@ -10,7 +10,13 @@ def lambda_handler(event:, context:)
   is_mobile = event.dig("mobile") || false
   return { code: "400", message: "URL is required" } if url.nil?
 
-  response = fetch(url, mobile: is_mobile) # Begin initial fetch
+  # Begin rescue block to handle invalid URLs
+  begin
+    response = fetch(url, mobile: is_mobile) # Begin initial fetch
+  rescue => e
+    return { code: "400", message: e.message }
+  end
+
   redirection_limit = 10 # Number of redirects allowed
   is_redirection = response.code == "302"
 
