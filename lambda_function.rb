@@ -27,7 +27,8 @@ def lambda_handler(event:, context:)
   end
 
   response_code = response.code
-  body = response.body.encode!("UTF-8", invalid: :replace, undef: :replace)
+  # body = response.body.encode!("UTF-8", invalid: :replace, undef: :replace)
+  body = response.body.force_encoding("UTF-8")
 
   if !redirection_limit.positive? && response_code == "302"
     response_code = "400" # Set to 400 if redirection limit is reached
