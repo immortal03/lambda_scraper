@@ -45,8 +45,10 @@ def fetch(url, mobile: false)
   request = Net::HTTP::Get.new(uri)
 
   # Set headers
-  if mobile
-    request["User-Agent"] = "Mozilla/5.0 (Linux; Android 12) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.41 Mobile Safari/537.36"
+  request["User-Agent"] = if mobile
+    "Mozilla/5.0 (Linux; Android 12) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.41 Mobile Safari/537.36"
+  else
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36"
   end
 
   # Response body might contain content of other encoding than UTF-8
